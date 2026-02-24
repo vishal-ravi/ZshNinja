@@ -1,0 +1,141 @@
+# =========================================
+# 🥷 ZshNinja — Vishal Power Alias Pack
+# Silent. Fast. Powerful.
+# =========================================
+
+# ---------- SAFETY ----------
+# prevent accidental overwrite
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+# ---------- SYSTEM & NAVIGATION ----------
+alias cls='clear'
+alias c='clear'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias home='cd ~'
+alias downloads='cd ~/Downloads'
+alias docs='cd ~/Documents'
+alias desktop='cd ~/Desktop'
+
+# ---------- FILE LISTING ----------
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias tree='tree -C'
+
+# ---------- APT PACKAGE MANAGEMENT ----------
+alias update='sudo apt update && sudo apt upgrade -y'
+alias apti='sudo apt install'
+alias aptr='sudo apt remove'
+alias aptp='apt policy'
+alias aptclean='sudo apt autoremove -y && sudo apt autoclean'
+
+# ---------- PYTHON ----------
+alias py='python'
+alias py3='python3'
+alias pipu='pip install --upgrade pip'
+alias pipi='pip install'
+alias pipr='pip uninstall'
+
+# ---------- CONDA ----------
+alias ca='conda activate'
+alias cdact='conda deactivate'
+alias cenv='conda env list'
+alias clist='conda list'
+alias ccreate='conda create -n'
+alias crem='conda remove -n'
+
+# ---------- AI / LLM ----------
+alias oll='ollama list'
+alias ollrun='ollama run'
+alias ollpull='ollama pull'
+alias vsc='code .'
+
+# ---------- BIOINFORMATICS / GROMACS ----------
+alias gmxv='gmx --version'
+alias md='mkdir -p'
+alias rd='rm -rf'
+alias cpv='cp -v'
+alias mvv='mv -v'
+
+# ---------- GIT ----------
+alias gs='git status'
+alias ga='git add .'
+alias gac='git add . && git commit -m'
+alias gp='git push'
+alias gpl='git pull'
+alias gb='git branch'
+alias gco='git checkout'
+alias gl='git log --oneline --graph --decorate'
+
+# ---------- SYSTEM MONITOR ----------
+alias mem='free -h'
+alias cpu='lscpu'
+alias disk='df -h'
+alias ports='netstat -tulnp'
+
+# ---------- NETWORK ----------
+alias myip='curl -s ifconfig.me'
+alias pingg='ping google.com'
+alias wgetc='wget -c'
+
+# ---------- QUALITY OF LIFE ----------
+alias please='sudo'
+alias reload='source ~/.zshrc'
+alias path='echo $PATH | tr ":" "\n"'
+
+# =========================================
+# 🥷 POWER FUNCTIONS
+# =========================================
+
+# Full system cleanup
+updatefull() {
+    echo "🔄 Updating system..."
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+    sudo apt autoclean
+    echo "✅ System fully updated and cleaned."
+}
+
+# Quick conda environment creation
+mkconda() {
+    if [ -z "$1" ]; then
+        echo "Usage: mkconda <env_name> [python_version]"
+        return 1
+    fi
+
+    PYVER=${2:-3.11}
+    conda create -n "$1" python="$PYVER" -y
+    echo "✅ Conda environment '$1' created with Python $PYVER"
+}
+
+# Quick extract helper
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz)  tar xzf "$1" ;;
+            *.bz2)     bunzip2 "$1" ;;
+            *.rar)     unrar x "$1" ;;
+            *.gz)      gunzip "$1" ;;
+            *.tar)     tar xf "$1" ;;
+            *.tbz2)    tar xjf "$1" ;;
+            *.tgz)     tar xzf "$1" ;;
+            *.zip)     unzip "$1" ;;
+            *.Z)       uncompress "$1" ;;
+            *.7z)      7z x "$1" ;;
+            *) echo "❌ Cannot extract '$1'" ;;
+        esac
+    else
+        echo "❌ '$1' is not a valid file"
+    fi
+}
+
+# =========================================
+# 🥷 END OF ZshNinja
+# =========================================
